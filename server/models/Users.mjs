@@ -1,4 +1,5 @@
-const db = require ("../config/db");
+import db from "../config/db.mjs";
+import bcrypt from "bcrypt"
 
 class Users {
     constructor(user_pw, name, email, address, phone, role_id) {
@@ -9,7 +10,7 @@ class Users {
         this.phone = phone;
         this.role_id = role_id;
     }
-
+    
     save() {
         let d = new Date();
         let yyyy = d.getFullYear();
@@ -52,10 +53,18 @@ class Users {
         return db.execute(sql);
     }
 
-    static checkAuth(email, password){
-        let sql = `SELECT * FROM users WHERE email = "${email}" AND user_pw = "${password}";`;
-        return db.execute(sql);
+    static async checkAuth(email, password){
+        let sql = `SELECT * FROM users WHERE email = "${email}";`;
+        const [users, _] = await db.execute(sql);
+        
+        if (users.length === 0) {
+            return false; // User not found
+        }
+
+        const user = users[0];
+        const isValid = await bcrypt.compare(password, user.user_pw);
+        return isValid ? user : false;
     }
 }
 
-module.exports = Users
+export default Users;

@@ -2,11 +2,12 @@
   "name": "server",
   "version": "1.0.0",
   "description": "Backend for a paint company",
-  "main": "index.js",
+  "main": "index.mjs",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "devstart": "nodemon index.js"
+    "start": "node index.mjs",
+    "devstart": "nodemon index.mjs"
   },
   "keywords": [],
   "author": "Chanho Kim",
