@@ -6,16 +6,16 @@ import bcrypt from "bcrypt"
 //@access public
 const loginUser = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { email, user_pw } = req.body;
 
     // Validate input fields
-    if (!email || !password) {
+    if (!email || !user_pw) {
       res.status(400).json({ error: "Email and password are required" });
       return;
     }
 
     // Retrieve user from database
-    const user = await Users.checkAuth(email, password);
+    const user = await Users.checkAuth(email, user_pw);
 
     // Check if user exists
     if (!user) {
@@ -24,7 +24,7 @@ const loginUser = async (req, res, next) => {
     }
 
     // Check password using bcrypt
-    const isValidPassword = await bcrypt.compare(password, user.user_pw);
+    const isValidPassword = await bcrypt.compare(user_pw, user.user_pw);
     if (!isValidPassword) {
       res.status(401).json({ error: "Invalid email or password" });
       return;

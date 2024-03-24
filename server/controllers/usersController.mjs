@@ -29,10 +29,10 @@ const getUser = async (req, res, next) => {
 //@desc create an user
 //@route POST /api/users
 //@access public
-const createUser = async (req, res) => {
+const createUser = async (req, res, next) => {
   try{
-    const { pw, name, email, address, phone, role_id } = req.body;
-    if (!pw) {
+    const { user_pw, name, email, address, phone, role_id } = req.body;
+    if (!user_pw) {
       res.status(400);
       throw new Error("password field is mandatory");
     } else if (!name) {
@@ -51,7 +51,7 @@ const createUser = async (req, res) => {
       res.status(400);
       throw new Error("role field is mandatory");
     }
-    const hash = await bcrypt.hash(pw, 10)
+    const hash = await bcrypt.hash(user_pw, 10)
     let user = new Users(hash, name, email, address, phone, role_id);
     user = await user.save();
     res.status(201).json({

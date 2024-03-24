@@ -54,7 +54,7 @@ class Users {
     }
 
     static async checkAuth(email, password){
-        let sql = `SELECT * FROM users WHERE email = "${email}";`;
+        let sql = `SELECT * FROM users WHERE email = '${email}';`;
         const [users, _] = await db.execute(sql);
         
         if (users.length === 0) {
