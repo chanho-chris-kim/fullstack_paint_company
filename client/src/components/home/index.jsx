@@ -17,6 +17,8 @@ const Home = () => {
       // Redirect to login page if token is not present
       navigate("/login");
     }
+      const data = apiCall.getPaints();
+      setPaints(data)
   }, [navigate]);
 
   async function handleLogout() {
