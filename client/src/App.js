@@ -1,7 +1,6 @@
 import Login from "./components/auth/login";
 import SingUp from "./components/auth/signup";
 import Home from "./components/home";
-// import ForgotPassword from "./components/auth/forgotpassword";
 import { Container } from "react-bootstrap";
 import { AuthProvider } from "./contexts/authContext";
 import { useRoutes } from "react-router-dom";
@@ -23,11 +22,7 @@ function App() {
     {
       path: "/home",
       element: <Home />,
-    },
-    // {
-    //   path: "/forgotpassword",
-    //   element: <ForgotPassword />,
-    // }
+    }
   ];
   let routesElement = useRoutes(routesArray);
   return (

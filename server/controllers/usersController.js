@@ -52,7 +52,6 @@ const createUser = async (req, res) => {
 
   let user = new Users(pw, name, email, address, phone, role);
   user = await user.save();
-  console.log(user);
   res.status(201).json({
     message: `POST success`,
   });

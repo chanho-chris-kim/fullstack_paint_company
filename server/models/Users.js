@@ -51,6 +51,11 @@ class Users {
         let sql = `SELECT * FROM users WHERE user_id = ${id};`;
         return db.execute(sql);
     }
+
+    static checkAuth(email, password){
+        let sql = `SELECT * FROM users WHERE email = "${email}" AND user_pw = "${password}";`;
+        return db.execute(sql);
+    }
 }
 
 module.exports = Users
