@@ -7,9 +7,17 @@ import Navbar from "../navbar";
 const Delivery = () => {
   const { apiCall, token, setToken, paints, setPaints } = useApi();
   const [errorMessage, setErrorMessage] = useState("");
+  const [hasAdminRole, setHasAdminRole] = useState(false);
 
   const navigate = useNavigate();
+  useEffect(() => {
+    checkRoles();
+  }, []);
 
+  const checkRoles = () => {
+    const user = token;
+    setHasAdminRole(user && user.role_id === 1);
+  };
 
   async function handleLogout() {
     setErrorMessage("");
@@ -34,7 +42,7 @@ const Delivery = () => {
       <Navbar handleLogout={handleLogout} />
       <div className="vh-100 bg-light row">
         <div className="bg-dark col-sm-12 col-md-2 p-0">
-          <Nav />
+        <Nav hasAdminRole={hasAdminRole} />
         </div>
         <div className="bg-secondary bg-gradient col-sm-12 col-md-10">
           <div className="row bg-primary">

@@ -8,9 +8,6 @@ const Home = () => {
   const { apiCall, token, setToken, paints, setPaints } = useApi();
   const [errorMessage, setErrorMessage] = useState("");
   const [hasAdminRole, setHasAdminRole] = useState(false); 
-  const [hasPainterRole, setHasPainterRole] = useState(false); 
-  const [hasManagerRole, setHasManagerRole] = useState(false); 
-  const [hasSupervisorRole, setHasSupervisorRole] = useState(false); 
 
   const navigate = useNavigate();
 
@@ -39,14 +36,10 @@ const Home = () => {
   }, [paints]);
 
   const checkRoles = () => {
-    // Assuming you have access to the user object containing role information
     const user = token; // Get the current user object from your authentication context
 
     // Check user roles and set state variables accordingly
     setHasAdminRole(user && user.role_id === 1);
-    setHasPainterRole(user && user.role_id === 2);
-    setHasManagerRole(user && user.role_id === 3);
-    setHasSupervisorRole(user && user.role_id === 4);
   };
 
   async function handleLogout() {
@@ -72,9 +65,6 @@ const Home = () => {
         <div className="bg-dark col-sm-12 col-md-2 p-0">
         <Nav 
             hasAdminRole={hasAdminRole}
-            hasPainterRole={hasPainterRole}
-            hasManagerRole={hasManagerRole}
-            hasSupervisorRole={hasSupervisorRole}
           />
         </div>
         <div className="bg-secondary bg-gradient col-sm-12 col-md-10">

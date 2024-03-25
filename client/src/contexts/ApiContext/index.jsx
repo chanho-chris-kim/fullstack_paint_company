@@ -27,6 +27,24 @@ export const ApiProvider = ({ children }) => {
   const apiCall = {
 
     // USERS
+    async getUsers() {
+      try {
+        const response = await fetch(`${apiBaseUrl}/api/users`, {
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          },
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch paints"); 
+        }
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error("Error fetching paints:", error.message);
+        throw error; 
+      }
+    },
+
     async doSignUp(email, user_pw, name, address, phone, role_id) {
       try {
         const response = await fetch(`${apiBaseUrl}/api/users`, {

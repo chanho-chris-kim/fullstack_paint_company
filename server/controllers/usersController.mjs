@@ -7,7 +7,11 @@ import Users from "../models/Users.mjs";
 const getUsers = async (req, res, next) => {
   try {
     const [users, _] = await Users.findAll();
-    res.status(200).json({ count: users.length, users });
+    const sanitizedUsers = users.map(user => {
+      delete user.user_pw;
+      return user;
+    });
+    res.status(200).json({ count: sanitizedUsers.length, users: sanitizedUsers });
   } catch (err) {
     next(err);
   }

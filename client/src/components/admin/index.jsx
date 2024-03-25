@@ -7,6 +7,8 @@ import Navbar from "../navbar";
 const Admin = () => {
   const { apiCall, token, setToken, paints, setPaints } = useApi();
   const [errorMessage, setErrorMessage] = useState("");
+  const [users, setUsers] = useState("");
+  const [hasAdminRole, setHasAdminRole] = useState(false);
 
   const navigate = useNavigate();
 
@@ -16,17 +18,34 @@ const Admin = () => {
       // Redirect to login page if token is not present
       navigate("/login");
     }
+
+    let isCancelled = false;
     const fetchData = async () => {
-      try {
-        const data = await apiCall.getPaints();
-        setPaints(data);
-      } catch (err) {
-        console.log(err);
+      const data = await apiCall.getUsers();
+      if (!isCancelled) {
+        setUsers(data);
       }
     };
 
-    fetchData();
-  }, [token, navigate, setPaints]);
+    if (!isCancelled) {
+      fetchData();
+    }
+    console.log(users);
+
+    // cleanup
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    checkRoles();
+  }, []);
+
+  const checkRoles = () => {
+    const user = token;
+    setHasAdminRole(user && user.role_id === 1);
+  };
 
   async function handleLogout() {
     setErrorMessage("");
@@ -51,7 +70,7 @@ const Admin = () => {
       <Navbar handleLogout={handleLogout} />
       <div className="vh-100 bg-light row">
         <div className="bg-dark col-sm-12 col-md-2 p-0">
-          <Nav />
+          <Nav hasAdminRole={hasAdminRole} />
         </div>
         <div className="bg-secondary bg-gradient col-sm-12 col-md-10 p-0">
           <table class="table">
@@ -66,22 +85,19 @@ const Admin = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">chanho</th>
-                <td>chanho8@gmail.com</td>
-                <td>4391 rue de bullion</td>
-                <td>6472378102</td>
-                <td>admin</td>
-                <td>2024-03-24</td>
-              </tr>
-              <tr>
-                <th scope="row">chanho</th>
-                <td>chanho8@gmail.com</td>
-                <td>4391 rue de bullion</td>
-                <td>6472378102</td>
-                <td>admin</td>
-                <td>2024-03-24</td>
-              </tr>
+              {users &&
+                users.users.map((user) => (
+                  <tr key={user.user_id}>
+                    <th scope="row">{user.name}</th>
+                    <td>{user.email}</td>
+                    <td>{user.address}</td>
+                    <td>{user.phone}</td>
+                    <td>{user.role}</td>
+                    <td>
+                      {new Date(user.created_at).toISOString().split("T")[0]}
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
@@ -89,20 +105,5 @@ const Admin = () => {
     </div>
   );
 };
-
-const PaintGroup = ({ title, paints }) => (
-  <div className="col-md-3">
-    <p className="text-center">{title}</p>
-    {paints &&
-      paints.map((paint) => (
-        <div key={paint.id} className="card mb-1 border-danger">
-          <div className="card-body">
-            <h5 className="card-title">{paint.paint_colour}</h5>
-            <p className="card-text">{`${paint.paint_quantity} remains`}</p>
-          </div>
-        </div>
-      ))}
-  </div>
-);
 
 export default Admin;
