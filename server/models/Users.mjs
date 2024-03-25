@@ -44,10 +44,13 @@ class Users {
     }
 
     static findAll() {
-        let sql = "SELECT * FROM users;";
+        let sql = `
+        SELECT users.*, roles.role
+        FROM users 
+        INNER JOIN roles ON users.role_id = roles.role_id;`;
         return db.execute(sql);
     }
-
+    
     static findById(id){
         let sql = `SELECT * FROM users WHERE user_id = ${id};`;
         return db.execute(sql);
