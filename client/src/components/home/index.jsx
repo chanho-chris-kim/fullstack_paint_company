@@ -77,7 +77,7 @@ const Home = () => {
             hasSupervisorRole={hasSupervisorRole}
           />
         </div>
-        <div className="bg-grey bg-gradient col-sm-12 col-md-10">
+        <div className="bg-secondary bg-gradient col-sm-12 col-md-10">
           <div className="row bg-primary">
             {paints && (
               <>

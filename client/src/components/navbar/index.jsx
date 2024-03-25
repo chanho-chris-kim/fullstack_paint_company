@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useApi } from "../../contexts/ApiContext";
+import logo from "../../img/panda-bear.png";
 const Navbar = ({ handleLogout }) => {
   const { token, setToken } = useApi();
   const [errorMessage, setErrorMessage] = useState("");
@@ -11,7 +12,8 @@ const Navbar = ({ handleLogout }) => {
     <>
       <nav className="navbar navbar-light bg-light">
         <Link className="navbar-brand" to="/home">
-          Navbar
+          <img src={logo} width="50px" style={{ marginRight: "0.5rem" }} /> Panda
+          Paint
         </Link>
 
         <ul>

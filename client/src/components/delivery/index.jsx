@@ -36,7 +36,7 @@ const Delivery = () => {
         <div className="bg-dark col-sm-12 col-md-2 p-0">
           <Nav />
         </div>
-        <div className="bg-grey bg-gradient col-sm-12 col-md-10">
+        <div className="bg-secondary bg-gradient col-sm-12 col-md-10">
           <div className="row bg-primary">
             {paints && (
               <>

@@ -24,7 +24,7 @@ const Admin = () => {
         console.log(err);
       }
     };
-  
+
     fetchData();
   }, [token, navigate, setPaints]);
 
@@ -44,7 +44,7 @@ const Admin = () => {
   if (!token) {
     return navigate("/login");
   }
-  console.log(paints)
+  console.log(paints);
 
   return (
     <div className="p-3">
@@ -53,31 +53,37 @@ const Admin = () => {
         <div className="bg-dark col-sm-12 col-md-2 p-0">
           <Nav />
         </div>
-        <div className="bg-grey bg-gradient col-sm-12 col-md-10">
-          <div className="row bg-primary">
-            {paints && (
-              <>
-                <PaintGroup title="Available" paints={paints.categorizedPaints.a} />
-                <PaintGroup title="Running Low" paints={paints.categorizedPaints.b} />
-                <PaintGroup title="Out of Stock" paints={paints.categorizedPaints.c} />
-              </>
-            )}
-            <div className="col-md-3">
-                <p className="text-center">In Order</p>
-                  <div className="card mb-1 border-danger">
-                    <div className="card-body">
-                      <h5 className="card-title">Purple@@</h5>
-                      <p className="card-text">5@@ available</p>
-                    </div>
-                  </div>
-                  <div className="card mb-1 border-danger">
-                    <div className="card-body">
-                      <h5 className="card-title">Purple@@</h5>
-                      <p className="card-text">5@@ available</p>
-                    </div>
-                  </div>
-              </div>
-          </div>
+        <div className="bg-secondary bg-gradient col-sm-12 col-md-10 p-0">
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Address</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Role</th>
+                <th scope="col">Started</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">chanho</th>
+                <td>chanho8@gmail.com</td>
+                <td>4391 rue de bullion</td>
+                <td>6472378102</td>
+                <td>admin</td>
+                <td>2024-03-24</td>
+              </tr>
+              <tr>
+                <th scope="row">chanho</th>
+                <td>chanho8@gmail.com</td>
+                <td>4391 rue de bullion</td>
+                <td>6472378102</td>
+                <td>admin</td>
+                <td>2024-03-24</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -87,7 +93,8 @@ const Admin = () => {
 const PaintGroup = ({ title, paints }) => (
   <div className="col-md-3">
     <p className="text-center">{title}</p>
-      {paints && paints.map(paint => (
+    {paints &&
+      paints.map((paint) => (
         <div key={paint.id} className="card mb-1 border-danger">
           <div className="card-body">
             <h5 className="card-title">{paint.paint_colour}</h5>
