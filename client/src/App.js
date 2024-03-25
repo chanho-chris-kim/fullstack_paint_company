@@ -1,6 +1,8 @@
 import Login from "./components/auth/login";
 import SingUp from "./components/auth/signup";
 import Home from "./components/home";
+import Delivery from "./components/delivery";
+import Admin from "./components/admin";
 import { ApiProvider } from "./contexts/ApiContext";
 import { useRoutes } from "react-router-dom";
 
@@ -22,6 +24,14 @@ function App() {
     {
       path: "/home",
       element: <Home />,
+    },
+    {
+      path: "/delivery",
+      element: <Delivery />,
+    },
+    {
+      path: "/admin",
+      element: <Admin />,
     }
   ];
   let routesElement = useRoutes(routesArray);

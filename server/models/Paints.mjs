@@ -8,25 +8,23 @@ class Paints {
     }
     
     save() {
-        let d = new Date();
-        let yyyy = d.getFullYear();
-        let mm = d.getMonth() + 1;
-        let dd = d.getDate();
+        // let d = new Date();
+        // let yyyy = d.getFullYear();
+        // let mm = d.getMonth() + 1;
+        // let dd = d.getDate();
 
-        let createdAtDate = `${yyyy}-${mm}-${dd}`
+        // let createdAtDate = `${yyyy}-${mm}-${dd}`
 
         let sql = `
         INSERT INTO paints(
             paint_id,
             colour_id,
             paint_quantity,
-            last_update_at
         )
         VALUES(
             "${this.paint_id}",
             "${this.colour_id}",
             "${this.paint_quantity}",
-            "${createdAtDate}"
         )
         `;
 
@@ -34,8 +32,12 @@ class Paints {
     }
 
     static findAllPaints() {
-        let sql = "SELECT * FROM paints;";
-        return db.execute(sql);
+        let sql = `
+        SELECT p.*, pc.paint_colour
+        FROM paints p
+        INNER JOIN paint_colours pc ON p.colour_id = pc.paint_colour_id;
+    `;
+    return db.execute(sql);
     }
 
     // static findPaintById(id){
