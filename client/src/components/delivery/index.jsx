@@ -10,23 +10,6 @@ const Delivery = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Check if the user is logged in by verifying the presence of the token
-    if (!token) {
-      // Redirect to login page if token is not present
-      navigate("/login");
-    }
-    const fetchData = async () => {
-      try {
-        const data = await apiCall.getPaints();
-        setPaints(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-  
-    fetchData();
-  }, [token, navigate, setPaints]);
 
   async function handleLogout() {
     setErrorMessage("");
@@ -57,26 +40,10 @@ const Delivery = () => {
           <div className="row bg-primary">
             {paints && (
               <>
-                <PaintGroup title="Available" paints={paints.categorizedPaints.a} />
-                <PaintGroup title="Running Low" paints={paints.categorizedPaints.b} />
-                <PaintGroup title="Out of Stock" paints={paints.categorizedPaints.c} />
+                <DeliveryGroup title="Ready to Pick Up" paints={paints.categorizedPaints.a} />
+                <DeliveryGroup title="Picked Up" paints={paints.categorizedPaints.b} />
               </>
             )}
-            <div className="col-md-3">
-                <p className="text-center">In Order</p>
-                  <div className="card mb-1 border-danger">
-                    <div className="card-body">
-                      <h5 className="card-title">Purple@@</h5>
-                      <p className="card-text">5@@ available</p>
-                    </div>
-                  </div>
-                  <div className="card mb-1 border-danger">
-                    <div className="card-body">
-                      <h5 className="card-title">Purple@@</h5>
-                      <p className="card-text">5@@ available</p>
-                    </div>
-                  </div>
-              </div>
           </div>
         </div>
       </div>
@@ -84,14 +51,15 @@ const Delivery = () => {
   );
 };
 
-const PaintGroup = ({ title, paints }) => (
-  <div className="col-md-3">
+const DeliveryGroup = ({ title, paints }) => (
+  <div className="col-md-6">
     <p className="text-center">{title}</p>
       {paints && paints.map(paint => (
         <div key={paint.id} className="card mb-1 border-danger">
           <div className="card-body">
             <h5 className="card-title">{paint.paint_colour}</h5>
-            <p className="card-text">{`${paint.paint_quantity} remains`}</p>
+            <p className="card-text">Delivery address:</p>
+            <p className="card-text">{`${paint.paint_quantity}`}</p>
           </div>
         </div>
       ))}

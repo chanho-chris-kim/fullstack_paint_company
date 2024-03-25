@@ -27,13 +27,9 @@ const Nav = ({
         <CustomLink to="/home" className="nav-link nav-item">
           Home
         </CustomLink>
-        {hasPainterRole ? (
-          <></> // only display if user role_id = 2 is false
-        ) : (
-          <CustomLink to="/delivery" className="nav-link nav-item">
+        <CustomLink to="/delivery" className="nav-link nav-item">
             Delivery
           </CustomLink>
-        )}
         {hasAdminRole && ( //if user role_id = 1
           <CustomLink to="/admin" className="nav-link nav-item">
             Admin
