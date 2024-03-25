@@ -1,43 +1,24 @@
-import Login from "./components/auth/login";
-import SingUp from "./components/auth/signup";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/home";
 import Delivery from "./components/delivery";
 import Admin from "./components/admin";
+import Login from "./components/auth/login";
+import SignUp from "./components/auth/signup";
+import Navbar from "./components/navbar";
 import { ApiProvider } from "./contexts/ApiContext";
-import { useRoutes } from "react-router-dom";
 
 function App() {
-  const routesArray = [
-    {
-      exact: true, 
-      path: "/",
-      element: <Login />,
-    },
-    {
-      path: "/login",
-      element: <Login />,
-    },
-    {
-      path: "/singup",
-      element: <SingUp />,
-    },
-    {
-      path: "/home",
-      element: <Home />,
-    },
-    {
-      path: "/delivery",
-      element: <Delivery />,
-    },
-    {
-      path: "/admin",
-      element: <Admin />,
-    }
-  ];
-  let routesElement = useRoutes(routesArray);
   return (
     <ApiProvider>
-      {routesElement}
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/delivery" element={<Delivery />} />
+        <Route path="/admin" element={<Admin />} />
+      </Routes>
     </ApiProvider>
   );
 }

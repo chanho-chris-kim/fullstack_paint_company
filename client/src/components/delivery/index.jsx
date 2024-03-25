@@ -4,7 +4,7 @@ import { useApi } from "../../contexts/ApiContext";
 import Nav from "../nav";
 import Navbar from "../navbar";
 
-const Admin = () => {
+const Delivery = () => {
   const { apiCall, token, setToken, paints, setPaints } = useApi();
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -98,4 +98,4 @@ const PaintGroup = ({ title, paints }) => (
   </div>
 );
 
-export default Admin;
+export default Delivery;
