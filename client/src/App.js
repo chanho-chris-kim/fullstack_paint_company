@@ -11,6 +11,7 @@ import { ApiProvider } from "./contexts/ApiContext";
 function App() {
   return (
     <ApiProvider>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />

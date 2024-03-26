@@ -25,23 +25,22 @@ export const ApiProvider = ({ children }) => {
   }, [navigate]);
 
   const apiCall = {
-
     // USERS
     async getUsers() {
       try {
         const response = await fetch(`${apiBaseUrl}/api/users`, {
           headers: {
-            Authorization: `Bearer ${token}`, 
+            Authorization: `Bearer ${token}`,
           },
         });
         if (!response.ok) {
-          throw new Error("Failed to fetch paints"); 
+          throw new Error("Failed to fetch paints");
         }
         const data = await response.json();
         return data;
       } catch (error) {
         console.error("Error fetching paints:", error.message);
-        throw error; 
+        throw error;
       }
     },
 
@@ -104,8 +103,8 @@ export const ApiProvider = ({ children }) => {
 
     async doLogout() {
       try {
-        localStorage.removeItem("user");
-        // Redirect to the login page if needed
+        localStorage.removeItem("token");
+        setToken(null);
         navigate("/login");
       } catch (error) {
         throw new Error("Failed to log out");
@@ -117,17 +116,17 @@ export const ApiProvider = ({ children }) => {
       try {
         const response = await fetch(`${apiBaseUrl}/api/paints`, {
           headers: {
-            Authorization: `Bearer ${token}`, 
+            Authorization: `Bearer ${token}`,
           },
         });
         if (!response.ok) {
-          throw new Error("Failed to fetch paints"); 
+          throw new Error("Failed to fetch paints");
         }
         const data = await response.json();
         return data;
       } catch (error) {
         console.error("Error fetching paints:", error.message);
-        throw error; 
+        throw error;
       }
     },
   };
@@ -137,7 +136,7 @@ export const ApiProvider = ({ children }) => {
     token,
     setToken,
     paints,
-    setPaints
+    setPaints,
   };
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;

@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApi } from "../../contexts/ApiContext";
 import Nav from "../nav";
-import Navbar from "../navbar";
 
 const Delivery = () => {
-  const { apiCall, token, setToken, paints, setPaints } = useApi();
-  const [errorMessage, setErrorMessage] = useState("");
+  const { apiCall, token, paints } = useApi();
   const [hasAdminRole, setHasAdminRole] = useState(false);
 
   const navigate = useNavigate();
@@ -19,50 +17,42 @@ const Delivery = () => {
     setHasAdminRole(user && user.role_id === 1);
   };
 
-  async function handleLogout() {
-    setErrorMessage("");
-
-    try {
-      await apiCall.doLogout();
-      localStorage.removeItem("token");
-      setToken(null);
-      navigate("/login");
-    } catch {
-      setErrorMessage("Failed to log out");
-    }
-  }
-
   if (!token) {
     return navigate("/login");
-  }
-  console.log(paints)
-
-  return (
-    <div className="p-3">
-      <Navbar handleLogout={handleLogout} />
-      <div className="vh-100 bg-light row">
-        <div className="bg-dark col-sm-12 col-md-2 p-0">
-        <Nav hasAdminRole={hasAdminRole} />
-        </div>
-        <div className="bg-secondary bg-gradient col-sm-12 col-md-10">
-          <div className="row bg-primary">
-            {paints && (
-              <>
-                <DeliveryGroup title="Ready to Pick Up" paints={paints.categorizedPaints.a} />
-                <DeliveryGroup title="Picked Up" paints={paints.categorizedPaints.b} />
-              </>
-            )}
+  } else {
+    return (
+      <div className="p-3">
+        <div className="vh-100 bg-light row">
+          <div className="bg-dark col-sm-12 col-md-2 p-0">
+            <Nav hasAdminRole={hasAdminRole} />
+          </div>
+          <div className="bg-secondary bg-gradient col-sm-12 col-md-10">
+            <div className="row bg-primary">
+              {paints && (
+                <>
+                  <DeliveryGroup
+                    title="Ready to Pick Up"
+                    paints={paints.categorizedPaints.a}
+                  />
+                  <DeliveryGroup
+                    title="Picked Up"
+                    paints={paints.categorizedPaints.b}
+                  />
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 const DeliveryGroup = ({ title, paints }) => (
   <div className="col-md-6">
     <p className="text-center">{title}</p>
-      {paints && paints.map(paint => (
+    {paints &&
+      paints.map((paint) => (
         <div key={paint.id} className="card mb-1 border-danger">
           <div className="card-body">
             <h5 className="card-title">{paint.paint_colour}</h5>
