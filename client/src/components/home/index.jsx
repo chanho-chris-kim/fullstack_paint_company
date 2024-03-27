@@ -24,10 +24,10 @@ const Home = () => {
   } else {
     return (
       <>
-        <div className="w-100 bg-dark">
-          <h2 className="text-center text-white">Home</h2>
+        <div className="w-100 bg-dark py-2">
+          <h3 className="text-center text-white mb-0">Home</h3>
         </div>
-        <div className="row bg-light pl-2 pr-2 ml-lg-1 mr-lg-1">
+        <div className="row bg-light mr-lg-1 vh-100 mx-xs-1 mx-sm-1 pt-3">
           {paints && (
             <>
               <PaintGroup
@@ -44,7 +44,7 @@ const Home = () => {
               />
             </>
           )}
-          <div className="col-md-3 pl-lg-0">
+          <div className="col-md-3 px-1">
             <p className="text-center">In Order</p>
             <div className="card mb-1 bg-secondary">
               <div className="card-body text-white">
@@ -66,11 +66,11 @@ const Home = () => {
 };
 
 const PaintGroup = ({ title, paints }) => (
-  <div className="col-md-3 pl-lg-0">
+  <div className="col-md-3 border-right px-1">
     <p className="text-center">{title}</p>
     {paints &&
       paints.map((paint) => (
-        <div key={paint.id} className="card mb-1 bg-secondary">
+        <div key={paint.id} className="card mb-1 bg-secondary ">
           <div className="card-body text-white">
             <h5 className="card-title">{paint.paint_colour}</h5>
             <p className="card-text">{`${paint.paint_quantity} remains`}</p>

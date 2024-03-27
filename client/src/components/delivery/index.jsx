@@ -11,10 +11,10 @@ const Delivery = () => {
   } else {
     return (
       <>
-        <div className="w-100 bg-dark">
-          <h2 className="text-center text-white">Delivery</h2>
+        <div className="w-100 bg-dark py-2">
+          <h3 className="text-center text-white mb-0">Delivery</h3>
         </div>
-        <div className="row bg-light pl-2 pr-2 ml-lg-1 mr-lg-1">
+        <div className="row bg-light mr-lg-1 vh-100 mx-xs-1 mx-sm-1 pt-3">
           {paints && (
             <>
               <DeliveryGroup
@@ -24,6 +24,7 @@ const Delivery = () => {
               <DeliveryGroup
                 title="Picked Up"
                 paints={paints.categorizedPaints.b}
+                lastColumn
               />
             </>
           )}
@@ -33,8 +34,8 @@ const Delivery = () => {
   }
 };
 
-const DeliveryGroup = ({ title, paints }) => (
-  <div className="col-md-6 pl-lg-0">
+const DeliveryGroup = ({ title, paints, lastColumn }) => (
+  <div className={`col-md-6 ${lastColumn ? '' : 'border-right'} px-1`}>
     <p className="text-center">{title}</p>
     {paints &&
       paints.map((paint) => (

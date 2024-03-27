@@ -12,10 +12,11 @@ import { ApiProvider } from "./contexts/ApiContext";
 function App() {
   return (
     <ApiProvider>
-      <Navbar />
+      <div className="p-2">
+      <Navbar/>
+      </div>
       <div
-        className="bg-dark d-lg-none mw-100"
-        style={{ maxWidth: "11rem" }}
+        className="bg-dark d-lg-none mw-100 border-bottom"
       >
         <Nav />
       </div>
@@ -27,7 +28,7 @@ function App() {
           <Nav />
         </div>
 
-        <div className="col pl-lg-0 pr-lg-0">
+        <div className="col pl-lg-0">
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/login" element={<Login />} />

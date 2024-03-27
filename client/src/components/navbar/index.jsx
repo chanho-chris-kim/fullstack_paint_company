@@ -10,25 +10,35 @@ const Navbar = () => {
   async function handleLogout() {
     try {
       await apiCall.doLogout();
-    } catch(err) {
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
   }
   if (token) {
     return (
       <>
-        <nav className="navbar navbar-light bg-light">
-          <Link className="navbar-brand" to="/home">
+        <nav className="navbar p-0">
+          <Link className="text-dark" to="/home">
             <img src={logo} width="50px" style={{ marginRight: "0.5rem" }} />{" "}
             Panda Paint
           </Link>
-
-          <ul>
-            <Link to="/update-profile" className="btn btn-link h-50">
+          <div className="d-flex justify-content-end">
+            <div>
+            <div className="d-flex">
+              <p className="mr-1">Hi</p>
+              <Link to="/update-profile" className="h-50 mr-2 text-dark">
+                <u>{token.name ? token.name : token.email}</u>
+              </Link>
+            </div>
+            <p
+              to="/update-profile"
+              className="h-50 mr-2 text-dark d-none d-md-block mb-0"
+            >
               <strong>Email:</strong> {token.email}
-            </Link>
+            </p>
+            </div>
             <Button
-              className="btn btn-primary text-white"
+              className="btn btn-dark text-white"
               variant="link"
               onClick={() => {
                 handleLogout();
@@ -36,11 +46,8 @@ const Navbar = () => {
             >
               Log Out
             </Button>
-          </ul>
+          </div>
         </nav>
-        <p className="d-flex justify-content-end mr-3">
-          Hello {token.name ? token.name : token.email}, you are now logged in.
-        </p>
       </>
     );
   } else {

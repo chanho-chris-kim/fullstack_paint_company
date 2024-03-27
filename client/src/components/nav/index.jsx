@@ -10,16 +10,16 @@ const Nav = () => {
   } else {
     return (
       <>
-        <ul className="nav">
+        <ul className="nav d-flex justify-content-between">
           {/* Conditionally render links */}
-          <CustomLink to="/home" className="nav-link nav-item">
+          <CustomLink to="/home" className="nav-link nav-item text-white">
             Home
           </CustomLink>
-          <CustomLink to="/delivery" className="nav-link nav-item">
+          <CustomLink to="/delivery" className="nav-link nav-item text-white">
             Delivery
           </CustomLink>
           {token.role_id === 1 && ( //if user role_id = 1
-            <CustomLink to="/admin" className="nav-link nav-item">
+            <CustomLink to="/admin" className="nav-link nav-item text-white">
               Admin
             </CustomLink>
           )}
