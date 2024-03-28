@@ -14,6 +14,7 @@ export const ApiProvider = ({ children }) => {
   const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
   const [token, setToken] = useState(null);
   const [paints, setPaints] = useState(null);
+  const [deliveries, setDeliveries] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -129,6 +130,52 @@ export const ApiProvider = ({ children }) => {
         throw error;
       }
     },
+
+    // DELIVERIES
+    async getDeliveries() {
+      try {
+        const response = await fetch(`${apiBaseUrl}/api/deliveries`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch paints");
+        }
+        const data = await response.json();
+        setDeliveries(data)
+        return data;
+      } catch (error) {
+        console.error("Error fetching paints:", error.message);
+        throw error;
+      }
+    },
+
+    async doSignUp(email, user_pw, name, address, phone, role_id) {
+      try {
+        const response = await fetch(`${apiBaseUrl}/api/users`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            user_pw,
+            name,
+            address,
+            phone,
+            role_id,
+          }),
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.error || "Failed to sign up");
+        }
+        return data;
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    },
   };
 
   const value = {
@@ -137,6 +184,8 @@ export const ApiProvider = ({ children }) => {
     setToken,
     paints,
     setPaints,
+    deliveries,
+    setDeliveries,
   };
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
