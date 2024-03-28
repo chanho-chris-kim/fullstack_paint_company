@@ -46,15 +46,25 @@ const Home = () => {
           )}
           <div className="col-md-3 px-1">
             <p className="text-center">In Order</p>
-            <div className="card mb-1 bg-secondary">
-              <div className="card-body text-white">
-                <h5 className="card-title">Purple@@</h5>
+            <div className="card mb-1">
+              <div className="card-header" style={{ background: "#D3D3D3" }}>
+                <h5
+                  className="card-title mb-0"
+                >
+                  Purple@@
+                </h5>
+              </div>
+              <div className="card-body" style={{ background: "#E5E4E2" }}>
                 <p className="card-text">5@@ available</p>
               </div>
-            </div>
-            <div className="card mb-1 bg-secondary">
-              <div className="card-body text-white">
-                <h5 className="card-title">Purple@@</h5>
+              <div className="card-header" style={{ background: "#D3D3D3" }}>
+                <h5
+                  className="card-title mb-0"
+                >
+                  Purple@@
+                </h5>
+              </div>
+              <div className="card-body" style={{ background: "#E5E4E2" }}>
                 <p className="card-text">5@@ available</p>
               </div>
             </div>
@@ -70,9 +80,16 @@ const PaintGroup = ({ title, paints }) => (
     <p className="text-center">{title}</p>
     {paints &&
       paints.map((paint) => (
-        <div key={paint.id} className="card mb-1 bg-secondary ">
-          <div className="card-body text-white">
-            <h5 className="card-title">{paint.paint_colour}</h5>
+        <div key={paint.id} className="card mb-1">
+          <div className="card-header" style={{ background: "#D3D3D3" }}>
+            <h5
+              className="card-title mb-0"
+              style={{ color: paint.paint_colour }}
+            >
+              {paint.paint_colour}
+            </h5>
+          </div>
+          <div className="card-body" style={{ background: "#E5E4E2" }}>
             <p className="card-text">{`${paint.paint_quantity} remains`}</p>
           </div>
         </div>
