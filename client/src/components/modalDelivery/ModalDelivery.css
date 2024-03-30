@@ -1,0 +1,13 @@
+.modal-delivery {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 15, 15, 0.8);
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 777;
+}
+
+.modal-delivery-div{
+    width: 50vw;
+}

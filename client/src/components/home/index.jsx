@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApi } from "../../contexts/ApiContext";
-import Nav from "../nav";
 
 const Home = () => {
   const { apiCall, token, paints, setPaints } = useApi();

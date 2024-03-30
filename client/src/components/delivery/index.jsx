@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
+import ModalDelivery from "../modalDelivery";
 import { useNavigate } from "react-router-dom";
 import { useApi } from "../../contexts/ApiContext";
 import paint_icon from "../../img/varnish.png";
 import quantity_icon from "../../img/boxes.png";
 import assigned_icon from "../../img/assignment.png";
+import add_icon from "../../img/add.png";
+import "./Delivery.css";
 
 const Delivery = () => {
   const { apiCall, token, paints, setPaints, deliveries, setDeliveries } =
     useApi();
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,17 +32,19 @@ const Delivery = () => {
   } else {
     return (
       <>
+        <ModalDelivery showModal={showModal} setShowModal={setShowModal} />
         <div className="w-100 bg-dark py-2">
           <h3 className="text-center text-white mb-0">Delivery</h3>
         </div>
         <div className="row bg-light mr-lg-1 vh-100 mx-xs-1 mx-sm-1 pt-3">
-          {deliveries && (
+          {deliveries ? (
             <>
               <DeliveryGroup
                 title="Ready to Pick Up"
                 deliveries={deliveries.deliveries.filter(
                   (delivery) => delivery.status === 0
                 )}
+                setShowModal={setShowModal}
               />
               <DeliveryGroup
                 title="Picked Up"
@@ -48,6 +54,8 @@ const Delivery = () => {
                 lastColumn
               />
             </>
+          ) : (
+            <h2>Loading ...</h2>
           )}
         </div>
       </>
@@ -55,7 +63,7 @@ const Delivery = () => {
   }
 };
 
-const DeliveryGroup = ({ title, deliveries, lastColumn }) => (
+const DeliveryGroup = ({ title, deliveries, lastColumn, setShowModal }) => (
   <div className={`col-md-6 ${lastColumn ? "" : "border-right"} px-1`}>
     <p className="text-center">{title}</p>
     {deliveries &&
@@ -93,6 +101,26 @@ const DeliveryGroup = ({ title, deliveries, lastColumn }) => (
           </div>
         </div>
       ))}
+    {!lastColumn ? (
+      <div className="d-flex p-2 bg-light pt-4">
+        <button
+          type="button"
+          className="btn btn-outline-dark d-flex align-items-center w-100 justify-content-center"
+          onClick={() => {
+            setShowModal(true);
+          }}
+        >
+          <img
+            src={add_icon}
+            alt=""
+            width="20rem"
+            height="20rem"
+            className="mr-2 icon"
+          />
+          <h4 className="mb-0">add new</h4>
+        </button>
+      </div>
+    ) : null}
   </div>
 );
 

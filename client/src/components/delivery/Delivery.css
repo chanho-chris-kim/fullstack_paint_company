@@ -1,0 +1,6 @@
+.icon {
+  transition: color 0.3s ease;
+}
+button:hover .icon {
+  filter: brightness(0) invert(1);
+}
