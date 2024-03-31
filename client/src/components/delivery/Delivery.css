@@ -4,3 +4,8 @@
 button:hover .icon {
   filter: brightness(0) invert(1);
 }
+
+.column{
+  height: 75vh;
+  overflow: scroll;
+}

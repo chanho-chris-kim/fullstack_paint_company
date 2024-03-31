@@ -42,7 +42,9 @@ class Delivery {
     )
     `;
       const [result] = await db.execute(sql);
-      return result.delivery_id; // Return the ID of the newly inserted delivery
+      console.log("Delivery order created")
+      console.log(result)
+      return result; 
     } catch (error) {
       console.error("Error creating delivery:", error);
       throw new Error("Failed to create delivery.");
@@ -61,6 +63,7 @@ class Delivery {
     const formattedDeliveredAt =
       delivered_at !== null ? `"${delivered_at}"` : null;
     updatedFields.delivered_at = formattedDeliveredAt;
+
     try {
       let sql = `
         UPDATE deliveries

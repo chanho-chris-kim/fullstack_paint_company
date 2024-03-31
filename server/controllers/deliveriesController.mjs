@@ -59,10 +59,10 @@ const createDelivery = async (req, res, next) => {
       delivered_at
     );
 
-    const deliveryId = await delivery.createDelivery();
+    await delivery.createDelivery();
     res
       .status(201)
-      .json({ message: "Delivery created successfully", deliveryId });
+      .json({ message: "Delivery created successfully" });
   } catch (err) {
     console.error("Error creating delivery:", err);
     res.status(500).json({ error: "Internal Server Error" });

@@ -17,9 +17,7 @@ const Delivery = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await apiCall.getDeliveries();
-        setDeliveries(data);
-        console.log(deliveries);
+       await apiCall.getDeliveries();
       } catch (err) {
         console.log(err);
       }
@@ -64,43 +62,56 @@ const Delivery = () => {
 };
 
 const DeliveryGroup = ({ title, deliveries, lastColumn, setShowModal }) => (
-  <div className={`col-md-6 ${lastColumn ? "" : "border-right"} px-1`}>
-    <p className="text-center">{title}</p>
-    {deliveries &&
-      deliveries.map((delivery) => (
-        <div key={delivery.delivery_id} className="card mb-2 mx-1">
-          <div className="card-header" style={{ background: "#D3D3D3" }}>
-            <h5 className="card-title text-secondary mb-0">{`${delivery.delivery_address}`}</h5>
-          </div>
-          <div className="card-body" style={{ background: "#E5E4E2" }}>
-            <div className="d-flex">
-              <div className="d-flex mr-5">
-                <img src={`${paint_icon}`} alt width="20vw" className="mr-2" />
-                {}
-                <p
-                  className="card-text"
-                  style={{ color: delivery.delivery_colour }}
-                >
-                  {delivery.delivery_colour}
-                </p>
-              </div>
+  <div className={`col-md-6  ${lastColumn ? "" : "border-right"} px-1`}>
+    <div className="column">
+      <p className="text-center">{title}</p>
+      {deliveries &&
+        deliveries.map((delivery) => (
+          <div key={delivery.delivery_id} className="card mb-2 mx-1">
+            <div className="card-header" style={{ background: "#D3D3D3" }}>
+              <h5 className="card-title text-secondary mb-0">{`${delivery.delivery_address}`}</h5>
+            </div>
+            <div className="card-body" style={{ background: "#E5E4E2" }}>
               <div className="d-flex">
+                <div className="d-flex mr-5">
+                  <img
+                    src={`${paint_icon}`}
+                    alt
+                    width="20vw"
+                    className="mr-2"
+                  />
+                  {}
+                  <p
+                    className="card-text"
+                    style={{ color: delivery.delivery_colour }}
+                  >
+                    {delivery.delivery_colour}
+                  </p>
+                </div>
+                <div className="d-flex">
+                  <img
+                    src={`${quantity_icon}`}
+                    alt
+                    width="20vw"
+                    className="mr-2"
+                  />
+                  <p className="card-text">{delivery.quantity} cans</p>
+                </div>
+              </div>
+              <div className="d-flex mt-2 justify-content-end">
                 <img
-                  src={`${quantity_icon}`}
+                  src={`${assigned_icon}`}
                   alt
                   width="20vw"
                   className="mr-2"
                 />
-                <p className="card-text">{delivery.quantity} cans</p>
+                <p className="card-text">{delivery.assigned_by}</p>
               </div>
             </div>
-            <div className="d-flex mt-2 justify-content-end">
-              <img src={`${assigned_icon}`} alt width="20vw" className="mr-2" />
-              <p className="card-text">{delivery.assigned_by}</p>
-            </div>
           </div>
-        </div>
-      ))}
+        ))}
+    </div>
+
     {!lastColumn ? (
       <div className="d-flex p-2 bg-light pt-4">
         <button

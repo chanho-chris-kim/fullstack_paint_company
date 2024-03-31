@@ -16,6 +16,7 @@ const ModalDelivery = ({ showModal, setShowModal }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const user_id = token.user_id;
   // {
   //   "delivery_address": "vancouver",
   //   "delivery_colour_id": 5,
@@ -25,20 +26,22 @@ const ModalDelivery = ({ showModal, setShowModal }) => {
   //   "delivery_order_created_at": "2024-02-23",
   //   "delivered_at": "2023-05-29"
   // }
-
+  // console.log(token.user_id)
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setErrorMessage("");
       setLoading(true);
-      // await apiCall.doSignIn(
-      //   address,
-      //   colourId,
-      //   status,
-      //   quantity,
-      //   createdAt,
-      //   deliveredAt
-      // );
+      await apiCall.doAddDelivery(
+        address,
+        colourId,
+        status,
+        user_id,
+        quantity,
+        createdAt,
+        deliveredAt
+      );
+      setDeliveries(deliveries);
       setShowModal(false);
     } catch {
       setErrorMessage("Failed create new delivery order");
@@ -142,7 +145,6 @@ const ModalDelivery = ({ showModal, setShowModal }) => {
                       onChange={(e) => {
                         setDeliveredAt(e.target.value);
                       }}
-                      required
                     />
                   </Form.Group>
                   <div className="d-flex justify-content-end pt-4">

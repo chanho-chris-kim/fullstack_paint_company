@@ -143,7 +143,7 @@ export const ApiProvider = ({ children }) => {
           throw new Error("Failed to fetch paints");
         }
         const data = await response.json();
-        setDeliveries(data)
+        setDeliveries(data);
         return data;
       } catch (error) {
         console.error("Error fetching paints:", error.message);
@@ -151,26 +151,36 @@ export const ApiProvider = ({ children }) => {
       }
     },
 
-    async doSignUp(email, user_pw, name, address, phone, role_id) {
+    async doAddDelivery(
+      delivery_address,
+      delivery_colour_id,
+      status,
+      assigned_by_id,
+      quantity,
+      delivery_order_created_at,
+      delivered_at
+    ) {
       try {
-        const response = await fetch(`${apiBaseUrl}/api/users`, {
+        const response = await fetch(`${apiBaseUrl}/api/deliveries`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            email,
-            user_pw,
-            name,
-            address,
-            phone,
-            role_id,
+            delivery_address,
+            delivery_colour_id,
+            status,
+            assigned_by_id,
+            quantity,
+            delivery_order_created_at,
+            delivered_at,
           }),
         });
         const data = await response.json();
         if (!response.ok) {
-          throw new Error(data.error || "Failed to sign up");
+          throw new Error(data.error || "Failed to create delivery");
         }
+        console.log(data)
         return data;
       } catch (error) {
         throw new Error(error.message);
