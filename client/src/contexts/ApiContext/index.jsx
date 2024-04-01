@@ -186,6 +186,25 @@ export const ApiProvider = ({ children }) => {
         throw new Error(error.message);
       }
     },
+
+    async doDeleteDelivery(deliveryId) {
+      try {
+        const response = await fetch(`${apiBaseUrl}/api/deliveries/${deliveryId}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (!response.ok) {
+          throw new Error("Failed to delete delivery");
+        }
+        return true; // Indicate successful deletion
+      } catch (error) {
+        console.error("Error deleting delivery:", error.message);
+        throw error;
+      }
+    }
+    
   };
 
   const value = {

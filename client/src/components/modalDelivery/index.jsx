@@ -41,7 +41,9 @@ const ModalDelivery = ({ showModal, setShowModal }) => {
         createdAt,
         deliveredAt
       );
-      setDeliveries(deliveries);
+
+      const updatedDeliveries = await apiCall.getDeliveries();
+      setDeliveries(updatedDeliveries);
       setShowModal(false);
     } catch {
       setErrorMessage("Failed create new delivery order");

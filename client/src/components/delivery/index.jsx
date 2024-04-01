@@ -25,6 +25,18 @@ const Delivery = () => {
     fetchData();
   }, [navigate, setDeliveries]);
 
+  const handleDelete = async (id) => {
+    try {
+      await apiCall.doDeleteDelivery(id);
+      const updatedDeliveries = deliveries.deliveries.filter(
+        (delivery) => delivery.delivery_id !== id
+      );
+      setDeliveries({ ...deliveries, deliveries: updatedDeliveries });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   if (!token) {
     return navigate("/login");
   } else {
@@ -43,12 +55,14 @@ const Delivery = () => {
                   (delivery) => delivery.status === 0
                 )}
                 setShowModal={setShowModal}
+                handleDelete={handleDelete}
               />
               <DeliveryGroup
                 title="Picked Up"
                 deliveries={deliveries.deliveries.filter(
                   (delivery) => delivery.status !== 0
                 )}
+                handleDelete={handleDelete}
                 lastColumn
               />
             </>
@@ -61,15 +75,34 @@ const Delivery = () => {
   }
 };
 
-const DeliveryGroup = ({ title, deliveries, lastColumn, setShowModal }) => (
+const DeliveryGroup = ({
+  title,
+  deliveries,
+  lastColumn,
+  setShowModal,
+  handleDelete,
+}) => (
   <div className={`col-md-6  ${lastColumn ? "" : "border-right"} px-1`}>
     <div className="column">
       <p className="text-center">{title}</p>
       {deliveries &&
         deliveries.map((delivery) => (
           <div key={delivery.delivery_id} className="card mb-2 mx-1">
-            <div className="card-header" style={{ background: "#D3D3D3" }}>
+            <div
+              className="card-header d-flex"
+              style={{ background: "#D3D3D3" }}
+            >
               <h5 className="card-title text-secondary mb-0">{`${delivery.delivery_address}`}</h5>
+              <button
+                type="button"
+                className="close ml-auto"
+                aria-label="Close"
+                onClick={() => {
+                  handleDelete(delivery.delivery_id);
+                }}
+              >
+                <span>&times;</span>
+              </button>
             </div>
             <div className="card-body" style={{ background: "#E5E4E2" }}>
               <div className="d-flex">
