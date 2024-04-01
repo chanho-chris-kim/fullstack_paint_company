@@ -17,7 +17,7 @@ const Delivery = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-       await apiCall.getDeliveries();
+        await apiCall.getDeliveries();
       } catch (err) {
         console.log(err);
       }
@@ -97,6 +97,21 @@ const DeliveryGroup = ({ title, deliveries, lastColumn, setShowModal }) => (
                   />
                   <p className="card-text">{delivery.quantity} cans</p>
                 </div>
+              </div>
+              <div className="d-flex mt-3">
+                <p className="card-text mb-0 mr-2">order created on: </p>
+                <p className="card-text mb-0">
+                  {delivery.delivery_order_created_at.slice(0, 10)}
+                </p>
+              </div>
+
+              <div className="d-flex">
+                <p className="card-text mb-0 mr-2">order picked up on: </p>
+                {delivery.delivered_at && (
+                  <p className="card-text mb-0">
+                    {delivery.delivered_at.slice(0, 10)}
+                  </p>
+                )}
               </div>
               <div className="d-flex mt-2 justify-content-end">
                 <img
