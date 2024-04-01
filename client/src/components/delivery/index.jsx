@@ -132,7 +132,7 @@ const DeliveryGroup = ({
           <div key={delivery.delivery_id} className="card mb-2 mx-1">
             <div
               className="card-header d-flex align-items-center"
-              style={{ background: "#D3D3D3" }}
+              style={{ background: "#D3D3D3", height:"3rem"}}
             >
               <h5 className="card-title text-secondary mb-0">{`${delivery.delivery_address}`}</h5>
               {!lastColumn && (
