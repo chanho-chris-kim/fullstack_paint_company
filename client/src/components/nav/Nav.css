@@ -1,0 +1,13 @@
+.nav-link {
+  color: rgb(255, 255, 255) !important;
+}
+.nav-link:hover {
+  text-decoration: underline !important;
+  color: rgb(182, 182, 182) !important;
+  font-weight: bold;
+}
+
+.nav-current {
+  text-decoration: underline;
+  font-weight: bold;
+}

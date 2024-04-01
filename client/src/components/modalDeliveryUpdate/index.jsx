@@ -1,61 +1,76 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useApi } from "../../contexts/ApiContext";
-import "./ModalDelivery.css";
+import "./ModalDeliveryUpdate.css";
 import { Form, Button, Alert } from "react-bootstrap";
 
-const ModalDelivery = ({ showModal, setShowModal }) => {
-  const { apiCall, token, paints, setPaints, deliveries, setDeliveries } =
-    useApi();
+const ModalDeliveryUpdate = ({
+  showUpdateModal,
+  setShowUpdateModal,
+  orderData,
+  setOrderData,
+}) => {
+  const {
+    delivery_address,
+    delivery_colour_id,
+    status,
+    quantity,
+    delivery_order_created_at,
+    delivered_at,
+    delivery_id,
+  } = orderData;
+  const { apiCall, token, deliveries, setDeliveries } = useApi();
   const [address, setAddress] = useState("");
   const [colourId, setColourId] = useState("");
-  const [status, setStatus] = useState("");
-  const [quantity, setQuantity] = useState("");
+  const [statusData, setStatusData] = useState("");
+  const [quantityData, setQuantityData] = useState("");
   const [createdAt, setCreatedAt] = useState("");
   const [deliveredAt, setDeliveredAt] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const user_id = token.user_id;
-  // {
-  //   "delivery_address": "vancouver",
-  //   "delivery_colour_id": 5,
-  //   "status": 0,
-  //   "assigned_by_id": 1,
-  //   "quantity": 555,
-  //   "delivery_order_created_at": "2024-02-23",
-  //   "delivered_at": "2023-05-29"
-  // }
-  // console.log(token.user_id)
+
+  useEffect(() => {
+    setAddress(delivery_address);
+    setColourId(delivery_colour_id);
+    setStatusData(status);
+    setQuantityData(quantity);
+    setCreatedAt(delivery_order_created_at.slice(0, 10));
+    setDeliveredAt(delivered_at.slice(0, 10));
+  }, [orderData]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setErrorMessage("");
       setLoading(true);
-      await apiCall.doAddDelivery(
-        address,
-        colourId,
-        status,
-        user_id,
-        quantity,
-        createdAt,
-        deliveredAt
-      );
-
-      const updatedDeliveries = await apiCall.getDeliveries();
-      setDeliveries(updatedDeliveries);
+      const updatedData = {
+        delivery_address: address,
+        delivery_colour_id: colourId,
+        status: statusData,
+        assigned_by_id: user_id,
+        quantity: quantityData,
+        delivery_order_created_at: createdAt,
+        delivered_at: deliveredAt,
+      };
+      console.log(updatedData);
+      await apiCall.doUpdateDelivery(delivery_id, updatedData);
       setAddress("");
       setColourId("");
-      setStatus("");
-      setQuantity("");
+      setStatusData("");
+      setQuantityData("");
       setCreatedAt("");
       setDeliveredAt("");
-      setShowModal(false);
+      setOrderData("");
+      const updatedDeliveries = await apiCall.getDeliveries();
+      setDeliveries(updatedDeliveries);
+      setShowUpdateModal(false);
     } catch {
       setErrorMessage("Failed create new delivery order");
     }
     setLoading(false);
   };
 
-  if (!showModal) {
+  if (!showUpdateModal) {
     return null;
   } else {
     return (
@@ -63,7 +78,14 @@ const ModalDelivery = ({ showModal, setShowModal }) => {
         <div
           className="modal-delivery d-flex justify-content-center align-items-center"
           onClick={() => {
-            setShowModal(false);
+            setShowUpdateModal(false);
+            setAddress("");
+            setColourId("");
+            setStatusData("");
+            setQuantityData("");
+            setCreatedAt("");
+            setDeliveredAt("");
+            setOrderData("");
           }}
         >
           <div
@@ -73,13 +95,20 @@ const ModalDelivery = ({ showModal, setShowModal }) => {
           >
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Add Delivery</h5>
+                <h5 className="modal-title">Update Order</h5>
                 <button
                   type="button"
                   className="close"
                   aria-label="Close"
                   onClick={() => {
-                    setShowModal(false);
+                    setShowUpdateModal(false);
+                    setAddress("");
+                    setColourId("");
+                    setStatusData("");
+                    setQuantityData("");
+                    setCreatedAt("");
+                    setDeliveredAt("");
+                    setOrderData("");
                   }}
                 >
                   <span>&times;</span>
@@ -122,8 +151,8 @@ const ModalDelivery = ({ showModal, setShowModal }) => {
                     <Form.Select
                       className="w-100 border-color"
                       aria-label="Select status"
-                      value={status}
-                      onChange={(e) => setStatus(e.target.value)}
+                      value={statusData}
+                      onChange={(e) => setStatusData(e.target.value)}
                       required
                     >
                       <option value="">select status...</option>
@@ -135,9 +164,9 @@ const ModalDelivery = ({ showModal, setShowModal }) => {
                     <Form.Label>Quantity</Form.Label>
                     <Form.Control
                       type="number"
-                      value={quantity}
+                      value={quantityData}
                       onChange={(e) => {
-                        setQuantity(e.target.value);
+                        setQuantityData(e.target.value);
                       }}
                       required
                     />
@@ -170,7 +199,7 @@ const ModalDelivery = ({ showModal, setShowModal }) => {
                       style={{ width: "13vw" }}
                       type="submit"
                     >
-                      {loading ? "Adding the order..." : "Add"}
+                      {loading ? "Updating the order..." : "Update"}
                     </Button>
                   </div>
                 </Form>
@@ -183,4 +212,4 @@ const ModalDelivery = ({ showModal, setShowModal }) => {
   }
 };
 
-export default ModalDelivery;
+export default ModalDeliveryUpdate;

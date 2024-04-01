@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ModalDelivery from "../modalDelivery";
+import ModalDeliveryUpdate from "../modalDeliveryUpdate";
 import { useNavigate } from "react-router-dom";
 import { useApi } from "../../contexts/ApiContext";
 import paint_icon from "../../img/varnish.png";
@@ -13,6 +14,8 @@ const Delivery = () => {
     useApi();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [orderData, setOrderData] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,6 +46,14 @@ const Delivery = () => {
     return (
       <>
         <ModalDelivery showModal={showModal} setShowModal={setShowModal} />
+        {orderData && (
+          <ModalDeliveryUpdate
+            showUpdateModal={showUpdateModal}
+            setShowUpdateModal={setShowUpdateModal}
+            orderData={orderData}
+            setOrderData={setOrderData}
+          />
+        )}
         <div className="w-100 bg-dark py-2">
           <h3 className="text-center text-white mb-0">Delivery</h3>
         </div>
@@ -56,6 +67,8 @@ const Delivery = () => {
                 )}
                 setShowModal={setShowModal}
                 handleDelete={handleDelete}
+                setShowUpdateModal={setShowUpdateModal}
+                setOrderData={setOrderData}
               />
               <DeliveryGroup
                 title="Picked Up"
@@ -63,6 +76,8 @@ const Delivery = () => {
                   (delivery) => delivery.status !== 0
                 )}
                 handleDelete={handleDelete}
+                setShowUpdateModal={setShowUpdateModal}
+                setOrderData={setOrderData}
                 lastColumn
               />
             </>
@@ -78,9 +93,11 @@ const Delivery = () => {
 const DeliveryGroup = ({
   title,
   deliveries,
-  lastColumn,
   setShowModal,
   handleDelete,
+  setShowUpdateModal,
+  setOrderData,
+  lastColumn,
 }) => (
   <div className={`col-md-6  ${lastColumn ? "" : "border-right"} px-1`}>
     <div className="column">
@@ -104,7 +121,14 @@ const DeliveryGroup = ({
                 <span>&times;</span>
               </button>
             </div>
-            <div className="card-body" style={{ background: "#E5E4E2" }}>
+            <div
+              className="card-body"
+              style={{ background: "#E5E4E2" }}
+              onClick={() => {
+                setShowUpdateModal(true);
+                setOrderData(delivery);
+              }}
+            >
               <div className="d-flex">
                 <div className="d-flex mr-5">
                   <img

@@ -180,7 +180,32 @@ export const ApiProvider = ({ children }) => {
         if (!response.ok) {
           throw new Error(data.error || "Failed to create delivery");
         }
-        console.log(data)
+        console.log(data);
+        return data;
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    },
+
+    async doUpdateDelivery(deliveryId, updatedData) {
+      console.log(JSON.stringify(updatedData));
+      try {
+        const response = await fetch(
+          `${apiBaseUrl}/api/deliveries/${deliveryId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(updatedData),
+          }
+        );
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.error || "Failed to update delivery");
+        }
+        console.log(data);
         return data;
       } catch (error) {
         throw new Error(error.message);
@@ -189,12 +214,15 @@ export const ApiProvider = ({ children }) => {
 
     async doDeleteDelivery(deliveryId) {
       try {
-        const response = await fetch(`${apiBaseUrl}/api/deliveries/${deliveryId}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          `${apiBaseUrl}/api/deliveries/${deliveryId}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         if (!response.ok) {
           throw new Error("Failed to delete delivery");
         }
@@ -203,8 +231,7 @@ export const ApiProvider = ({ children }) => {
         console.error("Error deleting delivery:", error.message);
         throw error;
       }
-    }
-    
+    },
   };
 
   const value = {

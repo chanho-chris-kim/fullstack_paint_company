@@ -9,3 +9,8 @@ button:hover .icon {
   height: 75vh;
   overflow: scroll;
 }
+
+.card-body:hover{
+  cursor: pointer;
+  filter: opacity(60%);
+}
