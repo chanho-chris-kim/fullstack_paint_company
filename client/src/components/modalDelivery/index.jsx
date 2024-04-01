@@ -82,7 +82,24 @@ const ModalDelivery = ({ showModal, setShowModal }) => {
               <div className="modal-body">
                 {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
                 <Form onSubmit={handleSubmit}>
-                  <Form.Group id="address">
+                  <Form.Group controlId="colourId" className="mb-2">
+                    <Form.Label>Colour</Form.Label>
+                    <Form.Select
+                      className="w-100 border-color"
+                      aria-label="Select paint colour"
+                      value={colourId}
+                      onChange={(e) => setColourId(e.target.value)}
+                      required
+                    >
+                      <option value="">select paint colour...</option>
+                      <option value="1">Blue</option>
+                      <option value="2">Grey</option>
+                      <option value="3">Black</option>
+                      <option value="4">White</option>
+                      <option value="5">Purple</option>
+                    </Form.Select>
+                  </Form.Group>
+                  <Form.Group controlId="address" className="mb-2">
                     <Form.Label>Address</Form.Label>
                     <Form.Control
                       type="address"
@@ -93,32 +110,25 @@ const ModalDelivery = ({ showModal, setShowModal }) => {
                       required
                     />
                   </Form.Group>
-                  <Form.Group id="colourId">
-                    <Form.Label>Colour</Form.Label>
-                    <Form.Control
-                      type="colourId"
-                      value={colourId}
-                      onChange={(e) => {
-                        setColourId(e.target.value);
-                      }}
-                      required
-                    />
-                  </Form.Group>
-                  <Form.Group id="status">
+
+                  <Form.Group controlId="status" className="mb-2">
                     <Form.Label>Status</Form.Label>
-                    <Form.Control
-                      type="status"
+                    <Form.Select
+                      className="w-100 border-color"
+                      aria-label="Select status"
                       value={status}
-                      onChange={(e) => {
-                        setStatus(e.target.value);
-                      }}
+                      onChange={(e) => setStatus(e.target.value)}
                       required
-                    />
+                    >
+                      <option value="">select status...</option>
+                      <option value="0">Ready to Pick Up</option>
+                      <option value="1">Picked Up</option>
+                    </Form.Select>
                   </Form.Group>
-                  <Form.Group id="quantity">
+                  <Form.Group controlId="quantity" className="mb-2">
                     <Form.Label>Quantity</Form.Label>
                     <Form.Control
-                      type="quantity"
+                      type="number"
                       value={quantity}
                       onChange={(e) => {
                         setQuantity(e.target.value);
@@ -126,10 +136,10 @@ const ModalDelivery = ({ showModal, setShowModal }) => {
                       required
                     />
                   </Form.Group>
-                  <Form.Group id="createdAt">
+                  <Form.Group controlId="createdAt" className="mb-2">
                     <Form.Label>Created At</Form.Label>
                     <Form.Control
-                      type="createdAt"
+                      type="date"
                       value={createdAt}
                       onChange={(e) => {
                         setCreatedAt(e.target.value);
@@ -137,10 +147,10 @@ const ModalDelivery = ({ showModal, setShowModal }) => {
                       required
                     />
                   </Form.Group>
-                  <Form.Group id="deliveredAt">
+                  <Form.Group controlId="deliveredAt">
                     <Form.Label>Delivered At</Form.Label>
                     <Form.Control
-                      type="deliveredAt"
+                      type="date"
                       value={deliveredAt}
                       onChange={(e) => {
                         setDeliveredAt(e.target.value);
