@@ -26,7 +26,7 @@ const Home = () => {
         <div className="w-100 bg-dark py-2">
           <h3 className="text-center text-white mb-0">Home</h3>
         </div>
-        <div className="row bg-light mr-lg-1 vh-100 mx-xs-1 mx-sm-1 pt-3">
+        <div className="row bg-light mr-lg-1 mx-sm-1 pt-3">
           {paints && (
             <>
               <PaintGroup

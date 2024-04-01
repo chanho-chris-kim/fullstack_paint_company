@@ -13,22 +13,19 @@ function App() {
   return (
     <ApiProvider>
       <div className="p-2">
-      <Navbar/>
+        <Navbar />
       </div>
-      <div
-        className="bg-dark d-lg-none mw-100 border-bottom"
-      >
+      <div className="bg-dark d-lg-none mw-100 border-bottom d-flex justify-content-around">
         <Nav />
       </div>
-      <div className="row vh-100">
+      <div className="d-flex w-100">
         <div
-          className="bg-dark flex-column d-none d-lg-block col"
-          style={{ maxWidth: "11rem" }}
+          className="bg-dark d-none d-lg-block pt-2 pl-2 nav-tablet"
+          style={{ width: "15%", maxWidth:"11rem"}}
         >
           <Nav />
         </div>
-
-        <div className="col pl-lg-0">
+        <div className="w-100">
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/login" element={<Login />} />

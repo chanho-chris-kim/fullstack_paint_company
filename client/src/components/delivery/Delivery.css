@@ -5,12 +5,17 @@ button:hover .icon {
   filter: brightness(0) invert(1);
 }
 
-.column{
+.column {
   height: 75vh;
   overflow: scroll;
 }
 
-.card-body:hover{
+.card-body:hover {
+  cursor: pointer;
+  filter: opacity(60%);
+}
+
+.picked-up-icon:hover {
   cursor: pointer;
   filter: opacity(60%);
 }

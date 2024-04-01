@@ -1,5 +1,6 @@
 .nav-link {
   color: rgb(255, 255, 255) !important;
+  font-weight: 100 !important;
 }
 .nav-link:hover {
   text-decoration: underline !important;
@@ -7,7 +8,11 @@
   font-weight: bold;
 }
 
-.nav-current {
+.active {
   text-decoration: underline;
-  font-weight: bold;
+  font-weight: bold !important;
+}
+
+.nav-tablet{
+  height: 91vh;
 }

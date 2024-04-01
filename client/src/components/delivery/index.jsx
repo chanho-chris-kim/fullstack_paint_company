@@ -7,6 +7,7 @@ import paint_icon from "../../img/varnish.png";
 import quantity_icon from "../../img/boxes.png";
 import assigned_icon from "../../img/assignment.png";
 import add_icon from "../../img/add.png";
+import picked_up_icon from "../../img/delivery.png";
 import "./Delivery.css";
 
 const Delivery = () => {
@@ -27,6 +28,28 @@ const Delivery = () => {
     };
     fetchData();
   }, [navigate, setDeliveries]);
+
+  const handlePickUp = async (delivery) => {
+    try {
+      const updatedData = {
+        delivery_address: delivery.delivery_address,
+        delivery_colour_id: delivery.delivery_colour_id,
+        status: 1,
+        assigned_by_id: delivery.assigned_by_id,
+        quantity: delivery.quantity,
+        delivery_order_created_at: delivery.delivery_order_created_at.slice(
+          0,
+          10
+        ),
+        delivered_at: delivery.delivered_at.slice(0, 10),
+      };
+      await apiCall.doUpdateDelivery(delivery.delivery_id, updatedData);
+      const updatedDeliveries = await apiCall.getDeliveries();
+      setDeliveries(updatedDeliveries);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleDelete = async (id) => {
     try {
@@ -57,7 +80,7 @@ const Delivery = () => {
         <div className="w-100 bg-dark py-2">
           <h3 className="text-center text-white mb-0">Delivery</h3>
         </div>
-        <div className="row bg-light mr-lg-1 vh-100 mx-xs-1 mx-sm-1 pt-3">
+        <div className="row bg-light mr-lg-1 mx-sm-1 pt-3">
           {deliveries ? (
             <>
               <DeliveryGroup
@@ -69,6 +92,7 @@ const Delivery = () => {
                 handleDelete={handleDelete}
                 setShowUpdateModal={setShowUpdateModal}
                 setOrderData={setOrderData}
+                handlePickUp={handlePickUp}
               />
               <DeliveryGroup
                 title="Picked Up"
@@ -97,6 +121,7 @@ const DeliveryGroup = ({
   handleDelete,
   setShowUpdateModal,
   setOrderData,
+  handlePickUp,
   lastColumn,
 }) => (
   <div className={`col-md-6  ${lastColumn ? "" : "border-right"} px-1`}>
@@ -106,13 +131,24 @@ const DeliveryGroup = ({
         deliveries.map((delivery) => (
           <div key={delivery.delivery_id} className="card mb-2 mx-1">
             <div
-              className="card-header d-flex"
+              className="card-header d-flex align-items-center"
               style={{ background: "#D3D3D3" }}
             >
               <h5 className="card-title text-secondary mb-0">{`${delivery.delivery_address}`}</h5>
+              {!lastColumn && (
+                <img
+                  src={picked_up_icon}
+                  style={{width:"2rem"}}
+                  className="ml-auto mr-3 picked-up-icon"
+                  aria-label="picked up"
+                  onClick={() => {
+                    handlePickUp(delivery);
+                  }}
+                />
+              )}
               <button
                 type="button"
-                className="close ml-auto"
+                className={`close ${lastColumn && "ml-auto"}`}
                 aria-label="Close"
                 onClick={() => {
                   handleDelete(delivery.delivery_id);
